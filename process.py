@@ -12,7 +12,6 @@ VALUES=['a','b','c','d']
 
 SUPERVISOR_TOKEN=os.environ['SUPERVISOR_TOKEN']
 
-#load rics
 def loadConfig():
         with open('/data/options.json') as config_file:
                 return json.load(config_file)
