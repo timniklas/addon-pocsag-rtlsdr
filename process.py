@@ -44,8 +44,8 @@ CONFIG=loadConfig()
 CONFIG_IGNORE_ADDRESSES=CONFIG['ignore_addresses']
 if len(CONFIG_IGNORE_ADDRESSES) > 0:
         print('Ignoring the following addresses: ')
-        for ric in CONFIG_IGNORE_ADDRESSES:
-                print(ric)
+        for address in CONFIG_IGNORE_ADDRESSES:
+                print(address)
 
 for line in sys.stdin:
         if 'Exit' == line.rstrip():
