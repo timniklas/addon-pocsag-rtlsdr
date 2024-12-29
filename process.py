@@ -42,10 +42,10 @@ def listStartswith(items: list, key: str):
         return False
 
 CONFIG=loadConfig()
-CONFIG_IGNORE_RICS=CONFIG['ignore_rics']
-if len(CONFIG_IGNORE_RICS) > 0:
-        print('Ignoring the following RICs: ')
-        for ric in CONFIG_IGNORE_RICS:
+CONFIG_IGNORE_ADDRESSES=CONFIG['ignore_addresses']
+if len(CONFIG_IGNORE_ADDRESSES) > 0:
+        print('Ignoring the following addresses: ')
+        for ric in CONFIG_IGNORE_ADDRESSES:
                 print(ric)
 
 for line in sys.stdin:
@@ -60,9 +60,9 @@ for line in sys.stdin:
                 func = VALUES[int(key)]
                 local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-                full_ric = addr + func
-                if not listStartswith(CONFIG_IGNORE_RICS, full_ric):
-                        print(f"{local_time}: RIC {addr} {func}")
+                full_address = addr + func
+                if not listStartswith(CONFIG_IGNORE_ADDRESSES, full_address):
+                        print(f"{local_time}: PROCESSING {addr} {func}")
                         asyncio.run(publish(addr, func))
                 else:
-                        print(f"{local_time}: IGNORE RIC {addr} {func}")
+                        print(f"{local_time}: IGNORING {addr} {func}")
