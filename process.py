@@ -17,9 +17,7 @@ async def fire_event(event_type: str, payload):
                 headers={
                         'Authorization': f'Bearer {SUPERVISOR_TOKEN}'
                 },
-                json={
-                        'extra_data': payload
-                }) as response:
+                json=payload) as response:
                         response.raise_for_status()
 
 async def publish(pocsag_address: str, pocsag_function: str):
