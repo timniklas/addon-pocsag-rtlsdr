@@ -61,7 +61,7 @@ for line in sys.stdin:
                 local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
                 full_ric = addr + func
-                if listStartswith(CONFIG_IGNORE_RICS, full_ric):
+                if not listStartswith(CONFIG_IGNORE_RICS, full_ric):
                         print(f"{local_time}: RIC {addr} {func}")
                         asyncio.run(publish(addr, func))
                 else:
