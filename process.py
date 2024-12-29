@@ -35,6 +35,12 @@ async def publish(pocsag_address: str, pocsag_function: str):
         except Exception as e:
                 print(e)
 
+def listStartswith(items: list, key: str):
+        for item in items:
+                if key.startswith(item):
+                        return True
+        return False
+
 CONFIG=loadConfig()
 CONFIG_IGNORE_RICS=CONFIG['ignore_rics']
 if len(CONFIG_IGNORE_RICS) > 0:
@@ -53,6 +59,10 @@ for line in sys.stdin:
                 key = result[2]
                 func = VALUES[int(key)]
                 local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-                
-                print(f"{local_time}: RIC {addr} {func}")
-                asyncio.run(publish(addr, func))
+
+                full_ric = addr + func
+                if listStartswith(CONFIG_IGNORE_RICS, full_ric):
+                        print(f"{local_time}: RIC {addr} {func}")
+                        asyncio.run(publish(addr, func))
+                else:
+                        print(f"{local_time}: IGNORE RIC {addr} {func}")
