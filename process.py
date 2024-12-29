@@ -5,11 +5,17 @@ import aiohttp
 import asyncio
 from enum import Enum
 from time import gmtime, strftime
+import json
 
 pattern = r"POCSAG1200:\s+Address:\s+(\d+)\s+Function:\s+(\d)"
 VALUES=['a','b','c','d']
 
 SUPERVISOR_TOKEN=os.environ['SUPERVISOR_TOKEN']
+
+#load rics
+def loadConfig():
+        with open('/data/options.json') as config_file:
+                return json.load(config_file)
 
 async def fire_event(event_type: str, payload):
         async with aiohttp.ClientSession() as websession:
@@ -28,6 +34,13 @@ async def publish(pocsag_address: str, pocsag_function: str):
                 })
         except Exception as e:
                 print(e)
+
+CONFIG=loadConfig()
+CONFIG_IGNORE_RICS=CONFIG['ignore_rics']
+if len(CONFIG_IGNORE_RICS) > 0:
+        print('Ignoring the following RICs: ')
+        for ric in CONFIG_IGNORE_RICS:
+                print(ric)
 
 for line in sys.stdin:
         if 'Exit' == line.rstrip():
