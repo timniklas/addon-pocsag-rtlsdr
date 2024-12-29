@@ -25,15 +25,6 @@ async def fire_event(event_type: str, payload):
                 json=payload) as response:
                         response.raise_for_status()
 
-async def publish(pocsag_address: str, pocsag_function: str):
-        try:
-                await fire_event('pocsag_receive', {
-                        'address': pocsag_address,
-                        'function': pocsag_function
-                })
-        except Exception as e:
-                print(e)
-
 def listStartswith(items: list, key: str):
         for item in items:
                 if key.startswith(item):
@@ -62,6 +53,9 @@ for line in sys.stdin:
                 full_address = addr + func
                 if not listStartswith(CONFIG_IGNORE_ADDRESSES, full_address):
                         print(f"{local_time}: PROCESSING {addr} {func}")
-                        asyncio.run(publish(addr, func))
+                        asyncio.run(fire_event('pocsag_receive', {
+                                'address': pocsag_address,
+                                'function': pocsag_function
+                        }))
                 else:
                         print(f"{local_time}: IGNORING {addr} {func}")
