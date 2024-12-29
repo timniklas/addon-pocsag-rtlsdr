@@ -9,4 +9,4 @@ This is a collection of Home Assistant add-ons.
 
 This addons fires the Home Assistat event 'pocsag_receive'.
 
-![image](https://github.com/user-attachments/assets/ef110578-74a7-44e4-92d3-a908e2490659)
+![image](https://github.com/user-attachments/assets/09f47438-3f5c-4120-ab18-c87707dfd68f)
