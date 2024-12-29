@@ -45,17 +45,17 @@ for line in sys.stdin:
                 break
         result = re.search(pattern, line)
         if result:
-                addr = result[1].rjust(7, '0')
+                pocsag_address = result[1].rjust(7, '0')
                 key = result[2]
-                func = VALUES[int(key)]
+                pocsag_function = VALUES[int(key)]
                 local_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-                full_address = addr + func
+                full_address = pocsag_address + pocsag_function
                 if not listStartswith(CONFIG_IGNORE_ADDRESSES, full_address):
-                        print(f"{local_time}: PROCESSING {addr} {func}")
+                        print(f"{local_time}: PROCESSING {pocsag_address} {pocsag_function}")
                         asyncio.run(fire_event('pocsag_receive', {
                                 'address': pocsag_address,
                                 'function': pocsag_function
                         }))
                 else:
-                        print(f"{local_time}: IGNORING {addr} {func}")
+                        print(f"{local_time}: IGNORING {pocsag_address} {pocsag_function}")
