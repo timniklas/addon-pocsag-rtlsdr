@@ -43,6 +43,8 @@ for line in sys.stdin:
                 break
         if "No supported devices found." in line:
                 break
+        if "cb transfer status: 5, canceling..." in line:
+                break
         result = re.search(pattern, line)
         if result:
                 pocsag_address = result[1].rjust(7, '0')
